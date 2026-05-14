@@ -1,0 +1,31 @@
+openapi: 3.0.0
+info:
+  title: API Maintenance
+  version: 1.0.0
+
+paths:
+  /maintenances:
+    get:
+      summary: Lister les maintenances
+      responses:
+        '200':
+          description: Liste des maintenances
+
+    post:
+      summary: Creer une maintenance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vehicule_id:
+                  type: integer
+                type:
+                  type: string
+                date:
+                  type: string
+      responses:
+        '201':
+          description: Maintenance creee

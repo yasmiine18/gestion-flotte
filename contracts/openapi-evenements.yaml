@@ -1,0 +1,27 @@
+openapi: 3.0.0
+info:
+  title: API Evenements
+  version: 1.0.0
+
+paths:
+  /evenements:
+    get:
+      summary: Lister les evenements
+      responses:
+        '200':
+          description: Liste des evenements
+
+  /evenements/{id}:
+    get:
+      summary: Consulter un evenement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Evenement trouve
+        '404':
+          description: Evenement introuvable

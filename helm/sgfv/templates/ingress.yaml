@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sgfv-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: sgfv.local
+      http:
+        paths:
+          - path: /graphql
+            pathType: Prefix
+            backend:
+              service:
+                name: flotte-gateway
+                port:
+                  number: {{ .Values.services.gateway.port }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: flotte-frontend
+                port:
+                  number: {{ .Values.services.frontend.port }}

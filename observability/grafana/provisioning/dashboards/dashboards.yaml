@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: "SGFV Dashboards"
+    orgId: 1
+    folder: "SGFV"
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    options:
+      path: /var/lib/grafana/dashboards

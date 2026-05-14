@@ -1,0 +1,127 @@
+{
+  "realm": "sgfv",
+  "enabled": true,
+  "displayName": "SGFV — Gestion de Flotte",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "bruteForceProtected": true,
+  "clients": [
+    {
+      "clientId": "sgfv-frontend",
+      "enabled": true,
+      "publicClient": true,
+      "redirectUris": [
+        "http://localhost:80/*",
+        "http://localhost:5173/*",
+        "http://localhost/*"
+      ],
+      "webOrigins": [
+        "http://localhost:80",
+        "http://localhost:5173",
+        "http://localhost",
+        "*"
+      ],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "protocol": "openid-connect"
+    },
+    {
+      "clientId": "sgfv-backend",
+      "enabled": true,
+      "publicClient": false,
+      "bearerOnly": true,
+      "protocol": "openid-connect"
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrateur — accès total"
+      },
+      {
+        "name": "gestionnaire",
+        "description": "Gestionnaire de flotte"
+      },
+      {
+        "name": "technicien",
+        "description": "Technicien de maintenance"
+      },
+      {
+        "name": "utilisateur",
+        "description": "Conducteur — accès limité"
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@sgfv.fr",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "admin"
+      ]
+    },
+    {
+      "username": "gestionnaire",
+      "email": "gestionnaire@sgfv.fr",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "gest123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "gestionnaire"
+      ]
+    },
+    {
+      "username": "technicien",
+      "email": "tech@sgfv.fr",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "tech123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "technicien"
+      ]
+    },
+    {
+      "username": "conducteur",
+      "email": "conducteur@sgfv.fr",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "cond123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "utilisateur"
+      ]
+    }
+  ],
+  "attributes": {
+    "frontendUrl": "http://localhost:8085"
+  }
+}

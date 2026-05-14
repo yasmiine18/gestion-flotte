@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package gps;
+
+message Position {
+  int64 vehicule_id = 1;
+  double latitude = 2;
+  double longitude = 3;
+  double vitesse = 4;
+  string timestamp = 5; // ISO, optionnel
+}
+
+message Ack {
+  bool ok = 1;
+  string message = 2;
+}
+
+service LocalisationService {
+  rpc StreamPositions(stream Position) returns (stream Ack);
+}

@@ -1,0 +1,37 @@
+type Vehicule {
+  id: ID!
+  immatriculation: String!
+  marque: String!
+  dispo: Boolean!
+  conducteur: Conducteur
+  dernierePosition: Localisation
+}
+
+type Conducteur {
+  id: ID!
+  nom: String!
+  prenom: String!
+  permis: String!
+}
+
+type Localisation {
+  latitude: Float!
+  longitude: Float!
+  vitesse: Float
+  timestamp: String!
+}
+
+type Evenement {
+  id: ID!
+  type: String!
+  vehiculeId: ID!
+  latitude: Float
+  longitude: Float
+  timestamp: String!
+}
+
+type Query {
+  vehicules: [Vehicule!]!
+  conducteurs: [Conducteur!]!
+  evenements: [Evenement!]!
+}

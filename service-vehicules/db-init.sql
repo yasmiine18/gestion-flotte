@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS vehicules (
+  id BIGSERIAL PRIMARY KEY,
+  immatriculation VARCHAR(100) NOT NULL,
+  marque VARCHAR(100) NOT NULL,
+  dispo BOOLEAN DEFAULT TRUE,
+  conducteur_id BIGINT
+);

@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  title: API Vehicules
+  version: 1.0.0
+
+paths:
+  /vehicules:
+    get:
+      summary: Lister les vehicules
+      responses:
+        '200':
+          description: Liste des vehicules
+
+    post:
+      summary: Creer un vehicule
+      responses:
+        '201':
+          description: Vehicule cree
+
+  /vehicules/{id}/assigner/{conducteurId}:
+    post:
+      summary: Affecter un conducteur a un vehicule
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+        - name: conducteurId
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Affectation reussie

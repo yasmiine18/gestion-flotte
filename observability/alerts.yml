@@ -1,0 +1,20 @@
+groups:
+  - name: sgfv-alerts
+    rules:
+      - alert: OTelCollectorDown
+        expr: up{job="otel-collector"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "OTel Collector down"
+          description: "Le collecteur OpenTelemetry ne répond plus."
+
+      - alert: NoMetricsFromCollector
+        expr: absent(up{job="otel-collector"})
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Aucune métrique collector"
+          description: "Prometheus ne reçoit plus les métriques du collector."

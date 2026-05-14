@@ -1,0 +1,49 @@
+# Valeurs par défaut — surchargez avec values.prod.yaml en production
+
+global:
+  jwtSecret: secret123
+  kafkaBroker: kafka:9092
+
+images:
+  registry: ""        # ex: ghcr.io/votre-org
+  pullPolicy: IfNotPresent
+
+services:
+  vehicules:
+    port: 8081
+    replicas: 1
+  conducteurs:
+    port: 8082
+    replicas: 1
+  maintenance:
+    port: 8084
+    replicas: 1
+  localisation:
+    port: 8083
+    grpcPort: 50051
+    replicas: 1
+  evenements:
+    port: 8086
+    replicas: 1
+  gateway:
+    port: 4000
+    replicas: 1
+  frontend:
+    port: 80
+    replicas: 1
+
+postgres:
+  host: flotte-postgres
+  port: 5432
+  user: flotte
+  password: flotte
+
+timescaledb:
+  host: flotte-timescaledb
+  port: 5432
+  user: flotte
+  password: flotte
+  database: localisation_db
+
+keycloak:
+  adminPassword: admin123

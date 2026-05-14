@@ -1,0 +1,6 @@
+/* Réinitialisation globale - tout est dans App.css */
+body { margin: 0; }
+code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}

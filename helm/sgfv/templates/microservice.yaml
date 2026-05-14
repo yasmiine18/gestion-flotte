@@ -1,0 +1,94 @@
+{{- range $name, $svc := .Values.services }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flotte-{{ $name }}
+  labels:
+    app: flotte-{{ $name }}
+    app.kubernetes.io/part-of: sgfv
+spec:
+  replicas: {{ $svc.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: flotte-{{ $name }}
+  template:
+    metadata:
+      labels:
+        app: flotte-{{ $name }}
+    spec:
+      containers:
+        - name: {{ $name }}
+          image: "{{ $.Values.images.registry }}{{ if $.Values.images.registry }}/{{ end }}service-{{ $name }}:latest"
+          imagePullPolicy: {{ $.Values.images.pullPolicy }}
+          ports:
+            - containerPort: {{ $svc.port }}
+              name: http
+            {{- if $svc.grpcPort }}
+            - containerPort: {{ $svc.grpcPort }}
+              name: grpc
+            {{- end }}
+          env:
+            - name: PORT
+              value: "{{ $svc.port }}"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: sgfv-secrets
+                  key: jwt-secret
+            - name: KAFKA_ENABLED
+              value: "true"
+            - name: KAFKA_BROKER
+              value: {{ $.Values.global.kafkaBroker | quote }}
+            - name: DB_HOST
+              value: {{ $.Values.postgres.host | quote }}
+            - name: DB_PORT
+              value: "{{ $.Values.postgres.port }}"
+            - name: DB_USER
+              value: {{ $.Values.postgres.user | quote }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sgfv-secrets
+                  key: db-password
+            - name: DB_NAME
+              value: "{{ $name }}_db"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ $svc.port }}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ $svc.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flotte-{{ $name }}
+  labels:
+    app: flotte-{{ $name }}
+spec:
+  selector:
+    app: flotte-{{ $name }}
+  ports:
+    - name: http
+      port: {{ $svc.port }}
+      targetPort: {{ $svc.port }}
+    {{- if $svc.grpcPort }}
+    - name: grpc
+      port: {{ $svc.grpcPort }}
+      targetPort: {{ $svc.grpcPort }}
+    {{- end }}
+{{- end }}
